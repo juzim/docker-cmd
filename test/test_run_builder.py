@@ -1,11 +1,5 @@
-import os
 import pytest
 from docker_cmd.builder import DockerRunBuilder
-
-
-@pytest.fixture
-def mock_environ(mocker):
-    mocker.patch.dict(os.environ, {'BAR': 'baz'})
 
 
 cmds = [
@@ -39,8 +33,8 @@ def test_environments():
            DockerRunBuilder('test').environment('k', 'v').environment('k2', 'v2').build('cmd')
 
 
-def test_passed_environments(mock_environ):
-    assert 'docker run -e BAR=baz test cmd' == \
+def test_passed_environments():
+    assert 'docker run -e BAR test cmd' == \
            DockerRunBuilder('test').pass_environment('BAR').build('cmd')
 
 

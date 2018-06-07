@@ -1,5 +1,3 @@
-import os
-
 class DockerRunBuilder:
 
     DOCKER_CMD = 'docker'
@@ -11,6 +9,7 @@ class DockerRunBuilder:
         self._image_name = image_name
         self._volumes = {}
         self._environments = {}
+        self._passed_environments = []
         self._remove = False
         self._use_bash = False
 
@@ -23,7 +22,7 @@ class DockerRunBuilder:
         return self
 
     def pass_environment(self, name):
-        self._environments[name] = os.environ[name]
+        self._passed_environments.append(name)
         return self
 
     def auto_remove(self):
@@ -47,6 +46,9 @@ class DockerRunBuilder:
         for environment in self._environments:
             command_parts.append(f'{self.ARG_ENVIRONMENT} '
                                  f'{environment}={self._environments[environment]}')
+
+        for environment in self._passed_environments:
+            command_parts.append(f'{self.ARG_ENVIRONMENT} {environment}')
 
         command_parts.append(self.ARG_REMOVE) if self._remove is True else None
 
