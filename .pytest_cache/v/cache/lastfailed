@@ -1,0 +1,5 @@
+{
+  "test/test_run_builder.py::test_run[bash -c \"foo bar\"-docker run test bash -c 'foo bar']": true,
+  "test/test_run_builder.py::test_run[escaped \"foo bar\"-docker run escaped \"foo bar\"]": true,
+  "test/test_run_builder.py::test_run[pytest tests-docker run pytest tests]": true
+}
