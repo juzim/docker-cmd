@@ -28,7 +28,7 @@ class DockerRunBuilder:
         self._use_bash = True
         return self
 
-    def build_run(self, command):
+    def build(self, command):
         command_parts = [
             'docker run'
         ]
