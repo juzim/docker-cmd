@@ -1,3 +1,5 @@
+import os
+
 class DockerRunBuilder:
 
     DOCKER_CMD = 'docker'
@@ -18,6 +20,10 @@ class DockerRunBuilder:
 
     def environment(self, name, value):
         self._environments[name] = value
+        return self
+
+    def pass_environment(self, name):
+        self._environments[name] = os.environ[name]
         return self
 
     def auto_remove(self):
