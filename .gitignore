@@ -1,0 +1,4 @@
+.idea
+dist
+docker_cmd.egg-info
+.pytest_cache/
