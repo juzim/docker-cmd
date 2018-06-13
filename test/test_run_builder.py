@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 from docker_cmd.builder import DockerRunBuilder
 
 
@@ -12,6 +13,19 @@ cmds = [
 @pytest.mark.parametrize("command,expected", cmds)
 def test_run(command, expected):
     assert expected == DockerRunBuilder('test').build(command)
+
+
+def test_compose_no_files():
+    assert 'docker-compose run -f file1 test testcmd' \
+           == DockerRunBuilder('test').build_compose('testcmd', Path('file1'))
+
+
+def test_compose_additional_files():
+    assert 'docker-compose run -f file1 -f file2 test testcmd' == \
+           DockerRunBuilder('test').build_compose(
+               'testcmd',
+               Path('file1'),
+               [Path('file2')])
 
 
 def test_remove():
